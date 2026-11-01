@@ -43,7 +43,7 @@ public class Reserva {
             b.liberar();
         }
         this.estado = "EXPIRADA";
-        System.out.println("[Reserva] Reserva #" + idReserva + " expirada, boletos liberados.");
+        System.out.println("La reserva#" + idReserva + " ha expirada y los boletos fueron liberados.");
     }
 
     public void confirmar() {

@@ -12,7 +12,6 @@ public class RestriccionCompra {
         this.activa = activa;
     }
 
-    /** Operacion del diagrama: validarCantidad(cantidad: int): boolean */
     public boolean validarCantidad(int cantidad) {
         if (!activa) return true;
         return cantidad > 0 && cantidad <= maxBoletosPorUsuario;

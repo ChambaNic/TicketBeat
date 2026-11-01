@@ -1,5 +1,6 @@
 package modelo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Evento {
     private String tipoMusica;
     private String estado;
     private String artista;
-    private List<Funcion> funciones;
+    private List<Funcion> funciones = new ArrayList<>();
 
     public Evento(int idEvento, String nombre, String descripcion, String tipoMusica, String estado, String artista) {
         this.idEvento = idEvento;
@@ -19,7 +20,6 @@ public class Evento {
         this.tipoMusica = tipoMusica;
         this.estado = estado;
         this.artista = artista;
-        this.funciones = new ArrayList<>();
     }
 
     public Evento() {
@@ -28,6 +28,7 @@ public class Evento {
 
     public void actualizarEstado(String nuevoEstado) {
         this.estado = nuevoEstado;
+        System.out.println("El estado del evento '" + nombre + "' ha sido actualizado a: " + nuevoEstado);
     }
 
     public void agregarFuncion(Funcion funcion) {
@@ -91,5 +92,4 @@ public class Evento {
     public void setFunciones(List<Funcion> funciones) {
         this.funciones = funciones;
     }
-
 }    

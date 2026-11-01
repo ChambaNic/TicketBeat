@@ -1,4 +1,4 @@
-package modelo;
+package servicios;
 
 import interfaces.INotificar;
 
@@ -11,7 +11,10 @@ public class NotificacionServicio {
     }
 
     public boolean enviarNotificacion(String mensaje) {
-        if (notificador == null || mensaje == null || mensaje.isEmpty()) return false;
+        if (notificador == null || mensaje == null || mensaje.isEmpty()) {
+            return false;
+        }
+        
         return notificador.enviar(mensaje);
     }
 }

@@ -1,41 +1,39 @@
 import enumeraciones.*;
 import interfaces.*;
 import modelo.*;
+import servicios.DevolucionServicio;
+import servicios.NotificacionServicio;
 
 import java.time.LocalDateTime;
 
-/**
- * PARTE 4 - Programa principal: recorre las cuatro partes del diagrama.
- * Va en src/Main.java (paquete por defecto), por eso importa los tres paquetes.
- */
 public class Main {
+         public static void main(String[] args) {
 
-    public static void main(String[] args) {
+        System.out.println("1. Registro de un evento y su función");
+        Evento concierto = new Evento(1, "Noche de Rock", "Concierto en vivo", "Rock","ACTIVO", "Banda XYZ");
+        
+        Funcion funcion = new Funcion(100, LocalDateTime.now().plusDays(30), "Estadio Modelo", "DISPONIBLE");
 
-        System.out.println("===== 1. EVENTO, FUNCION Y BOLETOS (Parte 1) =====");
-        Evento concierto = new Evento(1, "Noche de Rock", "Concierto en vivo",
-                                      "Banda XYZ", "Rock");
-        Funcion funcion = concierto.programarFuncion(
-                100, LocalDateTime.now().plusDays(30), "Estadio Modelo");
+        Boleto b1 = new Boleto(1001, TipoBoleto.VIP, 80.0, EstadoBoleto.Disponible);
+        Boleto b2 = new Boleto(1002, TipoBoleto.General, 35.0, EstadoBoleto.Disponible);
+        Boleto b3 = new Boleto(1003, TipoBoleto.Asiento_Reservado, 50.0, EstadoBoleto.Disponible);
+        System.out.println("Total de boletos registrados en la función: " + funcion.getBoletos().size());
+        System.out.println("\n");
 
-        Boleto b1 = funcion.emitirBoleto(1001, TipoBoleto.VIP, 80.0);
-        Boleto b2 = funcion.emitirBoleto(1002, TipoBoleto.GENERAL, 35.0);
-        Boleto b3 = funcion.emitirBoleto(1003, TipoBoleto.ASIENTO_RESERVADO, 50.0);
-        System.out.println("Boletos disponibles: " + funcion.boletosDisponibles().size());
-
-        System.out.println("\n===== 2. ORGANIZADOR: POLITICAS Y RESTRICCIONES (Parte 3) =====");
+        System.out.println("2. Definición de política de devolución y restricción de compra por parte del organizador");
         Organizador organizador = new Organizador(1, "Productora Andina", "org@productora.ec");
         PoliticaDevolucion politica = new PoliticaDevolucion(10, 15, true, true);
         RestriccionCompra restriccion = new RestriccionCompra(20, 4, true);
         organizador.definirPolitica(politica);
         organizador.definirRestriccion(restriccion);
+        System.out.println("\n");
 
-        System.out.println("\n===== 3. COMPRA Y PAGO (Parte 2) =====");
+        System.out.println("3. Compra y pago de boletos");
         Comprador comprador = new Comprador(1, "Ana Torres", "ana@correo.com");
 
         int cantidadDeseada = 2;
         if (!restriccion.validarCantidad(cantidadDeseada)) {
-            System.out.println("Cantidad no permitida por la restriccion del organizador.");
+            System.out.println("La cantidad seleccionada supera el limite permitido por el organizador.");
             return;
         }
 
@@ -44,29 +42,30 @@ public class Main {
         compra.agregarBoleto(b2);
         System.out.println("Total a pagar: $" + compra.calcularTotal());
 
-        IPagador formaDePago = new PagoTarjeta();   // intercambiable: PagoMovil, PagoTransferencia
+        IPagador formaDePago = new PagoTarjeta();   
         compra.registrarPago(900, formaDePago);
         compra.confirmarCompra();
 
         NotificacionServicio notificador = new NotificacionServicio(new NotificarCorreo());
-        notificador.enviarNotificacion("Hola " + comprador.getNombre()
-                + ", tu compra #" + compra.getIdCompra() + " fue confirmada.");
+        notificador.enviarNotificacion("Hola " + comprador.getNombre() + ", tu compra #" + compra.getIdCompra() + " fue confirmada.");
+        System.out.println("\n");
 
-        System.out.println("\n===== 4. RESERVA (Parte 2) =====");
+        System.out.println("4. Reserva de boletos y solicitud de devolución");
         Reserva reserva = comprador.reservar(700, 1, 24);
         reserva.agregarBoleto(b3);
-        System.out.println("Boleto reservado: " + b3);
+        System.out.println("Boleto reservado: " + b3.getIdBoleto());
+        System.out.println("\n");
 
-        System.out.println("\n===== 5. SOLICITUD DE DEVOLUCION (Parte 3) =====");
-        SolicitarDevolucion solicitud = comprador.solicitarDevolucion(
-                800, "No puedo asistir al concierto", "DEVOLUCION");
+        System.out.println("5. Solicitud de devolución de boletos");
+        SolicitarDevolucion solicitud = comprador.solicitarDevolucion(800, "Impreviso personal, no puedo asistir al concierto", "DEVOLUCION");
         solicitud.asociarCompra(compra);
 
         DevolucionServicio devolucionServicio = new DevolucionServicio(politica);
         devolucionServicio.procesarDevolucion(solicitud);
         System.out.println("Estado de la solicitud: " + solicitud.getEstado());
+        System.out.println("\n");
 
-        System.out.println("\n===== 6. SOPORTE E INCIDENTES (Parte 4) =====");
+        System.out.println("6. Gestión de incidentes y soporte al cliente");
         AdministracionEvento administracion = new AdministracionEvento(1, "Administracion Central");
         administracion.administrarEvento(concierto);
 
@@ -80,10 +79,10 @@ public class Main {
         agente.escalarIncidente(incidente);
         administracion.resolverIncidente(incidente);
 
-        System.out.println("Estado final del incidente: " + incidente.getEstado()
-                + " | " + incidente.getSolucion());
+        System.out.println("Estado final del incidente: " + incidente.getEstado() + " | Detalle: " + incidente.getSolucion());
+        System.out.println("\n");
 
-        System.out.println("\n===== 7. CAMBIO DE ESTADO DEL EVENTO (Parte 1) =====");
+        System.out.println("7. Finalización del evento y cierre de la función");
         concierto.actualizarEstado("FINALIZADO");
     }
 }

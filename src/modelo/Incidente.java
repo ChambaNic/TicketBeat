@@ -2,11 +2,6 @@ package modelo;
 
 import java.time.LocalDateTime;
 
-/**
- * PARTE 4 - Incidente reportado por un Comprador.
- * Relaciones: Comprador 1 ---- 0..* Incidente
- *             Incidente 0..* ---- 0..1 Reserva
- */
 public class Incidente {
 
     private int idIncidente;
@@ -26,13 +21,12 @@ public class Incidente {
         this.estado = "ABIERTO";
         this.solucion = "";
         if (comprador != null) {
-            comprador.registrarIncidente(this);   // requiere ese metodo en Comprador
+            comprador.registrarIncidente(this);  
         }
     }
 
     public void asociarReserva(Reserva reserva) { this.reserva = reserva; }
 
-    /** Visibilidad de paquete: solo AgenteSoporte y AdministracionEvento mueven el estado. */
     void setEstado(String estado)     { this.estado = estado; }
     void setSolucion(String solucion) { this.solucion = solucion; }
 

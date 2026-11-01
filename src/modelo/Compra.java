@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import enumeraciones.EstadoCompra;
+import interfaces.IPagador;
+
 public class Compra {
 
     private int idCompra;
@@ -26,14 +29,13 @@ public class Compra {
 
     public void agregarBoleto(Boleto boleto) {
         if (estado != EstadoCompra.PENDIENTE) {
-            System.out.println("[Compra] No se puede modificar una compra " + estado);
+            System.out.println(" No se puede agregar boletos a una compra que no esta pendiente:  " + estado);
             return;
         }
         boletos.add(boleto);
         calcularTotal();
     }
 
-    /** Operacion del diagrama: calcularTotal(): double */
     public double calcularTotal() {
         double suma = 0.0;
         for (Boleto b : boletos) {
@@ -43,19 +45,17 @@ public class Compra {
         return this.total;
     }
 
-    /** Operacion del diagrama: confirmarCompra(): void */
     public void confirmarCompra() {
         if (estado != EstadoCompra.PENDIENTE) return;
         if (pago == null || !"PAGADO".equals(pago.getEstado())) {
-            System.out.println("[Compra] No se puede confirmar sin un pago aprobado.");
+            System.out.println("No se puede confirmar la compra sin un pago aprobado previamente.");
             return;
         }
         this.estado = EstadoCompra.CONFIRMADA;
         generarBoletos();
-        System.out.println("[Compra] Compra #" + idCompra + " confirmada por $" + total);
+        System.out.println("Compra #" + idCompra + " confirmada correctamente por un total de $" + total);
     }
 
-    /** Operacion del diagrama: cancelarCompra(): void */
     public void cancelarCompra() {
         if (estado == EstadoCompra.CANCELADA) return;
         for (Boleto b : boletos) {
@@ -65,10 +65,9 @@ public class Compra {
             pago.reembolsar();
         }
         this.estado = EstadoCompra.CANCELADA;
-        System.out.println("[Compra] Compra #" + idCompra + " cancelada.");
+        System.out.println("La compra #" + idCompra + " ha sido cancelada.");
     }
 
-    /** Operacion del diagrama: generarBoletos(): List<Boleto> */
     public List<Boleto> generarBoletos() {
         List<Boleto> emitidos = new ArrayList<>();
         for (Boleto b : boletos) {
@@ -79,7 +78,6 @@ public class Compra {
         return emitidos;
     }
 
-    /** Crea y procesa el pago asociado (relacion Compra 1 -- 0..1 Pago). */
     public boolean registrarPago(int idPago, IPagador formaDePago) {
         calcularTotal();
         this.pago = new Pago(idPago, total, formaDePago);

@@ -10,8 +10,8 @@ public class Organizador {
     private String nombre;
     private String correo;
 
-    private final List<PoliticaDevolucion> politicas = new ArrayList<>();      // 0..*
-    private final List<RestriccionCompra> restricciones = new ArrayList<>();   // 0..*
+    private final List<PoliticaDevolucion> politicas = new ArrayList<>();      
+    private final List<RestriccionCompra> restricciones = new ArrayList<>();   
 
     public Organizador(int idOrganizador, String nombre, String correo) {
         this.idOrganizador = idOrganizador;
@@ -19,18 +19,17 @@ public class Organizador {
         this.correo = correo;
     }
 
-    /** Operacion del diagrama: definirPolitica(politica: PoliticaDevolucion): void */
     public void definirPolitica(PoliticaDevolucion politica) {
         if (politica == null) return;
         politicas.add(politica);
-        System.out.println("[Organizador] Politica #" + politica.getIdPolitica() + " definida.");
+        System.out.println(" El organizador" + politica.getIdPolitica() + " registro una nueva politica.");
     }
 
-    /** Operacion del diagrama: definirRestriccion(restriccion: RestriccionCompra): void */
+
     public void definirRestriccion(RestriccionCompra restriccion) {
         if (restriccion == null) return;
         restricciones.add(restriccion);
-        System.out.println("[Organizador] Restriccion #" + restriccion.getIdRestriccion() + " definida.");
+        System.out.println(" El organizador" + restriccion.getIdRestriccion() + " registro una nueva restriccion.");
     }
 
     public int getIdOrganizador() { return idOrganizador; }

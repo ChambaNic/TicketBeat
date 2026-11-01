@@ -6,7 +6,7 @@ public class SolicitarDevolucion {
 
     private int idSolicitud;
     private String motivo;
-    private String tipoSolicitud;   // "DEVOLUCION" o "INTERCAMBIO"
+    private String tipoSolicitud;   
     private String estado;
     private LocalDateTime fechaSolicitada;
 
@@ -26,7 +26,7 @@ public class SolicitarDevolucion {
     public void asociarCompra(Compra compra) { this.compra = compra; }
     public void asociarBoleto(Boleto boleto) { this.boleto = boleto; }
 
-    void setEstado(String estado) { this.estado = estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
     public int getIdSolicitud()                { return idSolicitud; }
     public String getMotivo()                  { return motivo; }

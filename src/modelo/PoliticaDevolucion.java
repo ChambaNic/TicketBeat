@@ -10,8 +10,7 @@ public class PoliticaDevolucion implements IPoliticaDevolucion {
     private boolean permiteDevolucion;
     private boolean permiteIntercambio;
 
-    public PoliticaDevolucion(int idPolitica, int plazoDias,
-                              boolean permiteDevolucion, boolean permiteIntercambio) {
+    public PoliticaDevolucion(int idPolitica, int plazoDias,boolean permiteDevolucion, boolean permiteIntercambio) {
         this.idPolitica = idPolitica;
         this.plazoDias = plazoDias;
         this.permiteDevolucion = permiteDevolucion;
@@ -28,11 +27,11 @@ public class PoliticaDevolucion implements IPoliticaDevolucion {
         return permiteIntercambio;
     }
 
-    /** Verifica que la solicitud entre dentro del plazo en dias de la politica. */
+    // Verifica que la solicitud entre dentro del plazo en dias de la politica. 
     public boolean dentroDelPlazo(LocalDateTime fechaCompra, LocalDateTime fechaSolicitud) {
         return !fechaSolicitud.isAfter(fechaCompra.plusDays(plazoDias));
     }
 
-    public int getIdPolitica()  { return idPolitica; }
+    public int getIdPolitica() { return idPolitica; }
     public int getPlazoDias()   { return plazoDias; }
 }

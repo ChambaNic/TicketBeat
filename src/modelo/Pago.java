@@ -2,6 +2,9 @@ package modelo;
 
 import java.time.LocalDateTime;
 
+import interfaces.IPagador;
+import servicios.PagoServicio;
+
 public class Pago {
 
     private int idPago;
@@ -29,7 +32,7 @@ public class Pago {
     public boolean reembolsar() {
         if (!"PAGADO".equals(estado)) return false;
         this.estado = "REEMBOLSADO";
-        System.out.println("[Pago] Reembolso de $" + monto + " realizado.");
+        System.out.println("Se ha realizado un reembolso de $" + monto + ".");
         return true;
     }
 

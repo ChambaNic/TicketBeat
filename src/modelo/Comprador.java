@@ -40,7 +40,9 @@ public class Comprador {
     }
 
     public void registrarIncidente(Incidente incidente) {
-        incidentes.add(incidente);
+        if (incidente != null) {
+            incidentes.add(incidente);
+        }
     }
 
     public int getIdComprador() {

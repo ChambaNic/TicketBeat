@@ -22,6 +22,32 @@ public class Boleto {
         this.estado = EstadoBoleto.Disponible;
     }
 
+    public boolean reservar() {
+        if (estado == EstadoBoleto.Disponible) {
+            estado = EstadoBoleto.Reservado;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean vender() {
+        if (estado == EstadoBoleto.Disponible || estado == EstadoBoleto.Reservado) {
+            estado = EstadoBoleto.Vendido;
+            return true;
+        }
+        return false;
+    }
+
+    public void liberar() {
+        if (estado == EstadoBoleto.Reservado) {
+            estado = EstadoBoleto.Disponible;
+        }
+    }
+
+    public void cancelar() {
+        estado = EstadoBoleto.Cancelado;
+    }
+
     public int getIdBoleto() {
         return idBoleto;
     }

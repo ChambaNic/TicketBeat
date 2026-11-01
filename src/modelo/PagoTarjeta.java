@@ -1,6 +1,6 @@
 package modelo;
 
-import interfaces.Ipagador;
+import interfaces.IPagador;
 
 public class PagoTarjeta implements IPagador {
     @Override

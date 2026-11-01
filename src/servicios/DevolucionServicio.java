@@ -1,6 +1,7 @@
-package modelo;
+package servicios;
 
 import interfaces.IPoliticaDevolucion;
+import modelo.SolicitarDevolucion;
 
 public class DevolucionServicio {
 
@@ -10,35 +11,33 @@ public class DevolucionServicio {
         this.politica = politica;
     }
 
-    /** Operacion del diagrama: procesarDevolucion(solicitud): boolean */
     public boolean procesarDevolucion(SolicitarDevolucion solicitud) {
         if (solicitud == null) return false;
         if (!politica.esDevolucionPermitida()) {
             solicitud.setEstado("RECHAZADA");
-            System.out.println("[DevolucionServicio] Devolucion no permitida por la politica.");
+            System.out.println("La devolucion no esta permitida por la politica establecidas.");
             return false;
         }
         if (solicitud.getCompra() != null) {
             solicitud.getCompra().cancelarCompra();
         }
         solicitud.setEstado("APROBADA");
-        System.out.println("[DevolucionServicio] Devolucion #" + solicitud.getIdSolicitud() + " aprobada.");
+        System.out.println(" Devolucion #" + solicitud.getIdSolicitud() + " aprobada.");
         return true;
     }
 
-    /** Operacion del diagrama: procesarIntercambio(solicitud): boolean */
     public boolean procesarIntercambio(SolicitarDevolucion solicitud) {
         if (solicitud == null) return false;
         if (!politica.esIntercambioPermitido()) {
             solicitud.setEstado("RECHAZADA");
-            System.out.println("[DevolucionServicio] Intercambio no permitido por la politica.");
+            System.out.println("El intercambio no esta permitido por la politica establecidas.");
             return false;
         }
         if (solicitud.getBoleto() != null) {
             solicitud.getBoleto().cancelar();
         }
         solicitud.setEstado("INTERCAMBIADA");
-        System.out.println("[DevolucionServicio] Intercambio #" + solicitud.getIdSolicitud() + " aprobado.");
+        System.out.println("Intercambio #" + solicitud.getIdSolicitud() + " aprobado.");
         return true;
     }
 }

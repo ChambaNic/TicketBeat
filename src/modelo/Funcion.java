@@ -9,14 +9,13 @@ public class Funcion {
     private LocalDateTime fecha;
     private String localidad;
     private String estado;
-    private List<Boleto> boletos;
+    private List<Boleto> boletos = new ArrayList<>();
 
-    Funcion(int idFuncion, LocalDateTime fecha, String localidad, String estado) {
+    public Funcion(int idFuncion, LocalDateTime fecha, String localidad, String estado) {
         this.idFuncion = idFuncion;
         this.fecha = fecha;
         this.localidad = localidad;
         this.estado = estado;
-        this.boletos = new ArrayList<>();
     }
 
     public Funcion() {
@@ -64,5 +63,4 @@ public class Funcion {
     public void setBoletos(List<Boleto> boletos) {
         this.boletos = boletos;
     }
-
 }

@@ -1,10 +1,10 @@
-package modelo;
+package servicios;
 
-import interfaces.Ipagador;
+import interfaces.IPagador;
 
 public class PagoServicio {
 
-    private final IPagador pagador;   // -pagador: IPagador
+    private final IPagador pagador;  
 
     public PagoServicio(IPagador pagador) {
         this.pagador = pagador;
